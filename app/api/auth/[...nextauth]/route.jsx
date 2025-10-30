@@ -1,8 +1,14 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
+/**
+ * App Router–compliant NextAuth configuration
+ * Written in JSX style (same module semantics as your page.jsx)
+ */
+
 export const authOptions = {
   session: { strategy: "jwt" },
+
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -14,11 +20,15 @@ export const authOptions = {
       },
     }),
   ],
+
   callbacks: {
     async jwt({ token, account }) {
-      if (account?.access_token) token.accessToken = account.access_token;
+      if (account?.access_token) {
+        token.accessToken = account.access_token;
+      }
       return token;
     },
+
     async session({ session, token }) {
       session.accessToken = token.accessToken;
       return session;
@@ -26,7 +36,14 @@ export const authOptions = {
   },
 };
 
+// Create the NextAuth request handler
 const handler = NextAuth(authOptions);
 
-// ✅ App Router requires named exports for HTTP methods
-export { handler as GET, handler as POST };
+// In App Router, export HTTP methods explicitly (no default export)
+export async function GET(request, context) {
+  return handler(request, context);
+}
+
+export async function POST(request, context) {
+  return handler(request, context);
+}
