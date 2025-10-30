@@ -23,7 +23,9 @@
     "nextra": "^4.6.0",
     "nextra-theme-docs": "^4.6.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "next-auth": "^4.22.1",
+    "googleapis":"^118.0.0"
   },
   "devDependencies": {
     "@types/node": "22.13.10",
